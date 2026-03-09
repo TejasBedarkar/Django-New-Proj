@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect, get_object_or_404        #render 
 from .models import Student                  #to query Student table
 from .forms import StudentForm
 
+from django.contrib.auth.forms import UserCreationForm
+
 # Create your views here.
 
 def student_list(request):
@@ -36,3 +38,14 @@ def delete_student(request, id):
     student = Student.objects.get(id=id)
     student.delete()
     return redirect('student_list')
+
+
+def register(request):
+    if request.method == "POST":
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('login')
+    else:
+        form = UserCreationForm()
+    return render(request, 'register.html', {'form': form})
