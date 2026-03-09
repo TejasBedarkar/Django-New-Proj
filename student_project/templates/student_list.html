@@ -8,7 +8,15 @@
 
 <h1>Student List</h1>
 
+<!-- Logout Button -->
+<a href="/logout/">Logout</a>
+
+<br><br>
+
+<!-- Add Student Button -->
 <a href="/add-student/">Add New Student</a>
+
+<br><br>
 
 <table border="1">
 
@@ -23,6 +31,7 @@
 {% for student in students %}
 
 <tr>
+
 <td>{{ student.name }}</td>
 <td>{{ student.email }}</td>
 <td>{{ student.course }}</td>
