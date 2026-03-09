@@ -1,57 +1,135 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-<head>
-<title>Student List</title>
-</head>
+  <head>
+    <title>Student List</title>
 
-<body>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f6f8;
+      }
 
-<h1>Student List</h1>
+      .container {
+        width: 800px;
+        margin: 60px auto;
+        padding: 30px;
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+      }
 
-<!-- Logout Button -->
-<a href="/logout/">Logout</a>
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
 
-<br><br>
+      h1 {
+        margin: 0;
+      }
 
-<!-- Add Student Button -->
-<a href="/add-student/">Add New Student</a>
+      .actions {
+        margin-top: 20px;
+      }
 
-<br><br>
+      .button {
+        padding: 8px 14px;
+        text-decoration: none;
+        border-radius: 5px;
+        color: white;
+        font-size: 14px;
+      }
 
-<table border="1">
+      .add-btn {
+        background-color: #007bff;
+      }
 
-<tr>
-<th>Name</th>
-<th>Email</th>
-<th>Course</th>
-<th>Age</th>
-<th>Action</th>
-</tr>
+      .logout-btn {
+        background-color: #dc3545;
+      }
 
-{% for student in students %}
+      .edit-btn {
+        background-color: #28a745;
+      }
 
-<tr>
+      .delete-btn {
+        background-color: #dc3545;
+      }
 
-<td>{{ student.name }}</td>
-<td>{{ student.email }}</td>
-<td>{{ student.course }}</td>
-<td>{{ student.age }}</td>
+      .button:hover {
+        opacity: 0.8;
+      }
 
-<td>
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+      }
 
-<a href="/edit-student/{{ student.id }}/">Edit</a>
+      th {
+        background-color: #007bff;
+        color: white;
+        padding: 10px;
+      }
 
-|
+      td {
+        padding: 10px;
+        text-align: center;
+      }
 
-<a href="/delete-student/{{ student.id }}/">Delete</a>
+      tr:nth-child(even) {
+        background-color: #f2f2f2;
+      }
+    </style>
+  </head>
 
-</td>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1>Student List</h1>
+        <a class="button logout-btn" href="{% url 'logout' %}">Logout</a>
+      </div>
 
-</tr>
+      <div class="actions">
+        <a class="button add-btn" href="{% url 'add_student' %}"
+          >Add New Student</a
+        >
+      </div>
 
-{% endfor %}
+      <table>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Course</th>
+          <th>Age</th>
+          <th>Action</th>
+        </tr>
 
-</table>
+        {% for student in students %}
 
-</body>
+        <tr>
+          <td>{{ student.name }}</td>
+          <td>{{ student.email }}</td>
+          <td>{{ student.course }}</td>
+          <td>{{ student.age }}</td>
+
+          <td>
+            <a
+              class="button edit-btn"
+              href="{% url 'edit_student' student.id %}"
+              >Edit</a
+            >
+
+            <a
+              class="button delete-btn"
+              href="{% url 'delete_student' student.id %}"
+              >Delete</a
+            >
+          </td>
+        </tr>
+
+        {% endfor %}
+      </table>
+    </div>
+  </body>
 </html>

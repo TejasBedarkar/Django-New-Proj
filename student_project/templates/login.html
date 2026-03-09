@@ -1,38 +1,104 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-<head>
-<title>Login</title>
-</head>
+  <head>
+    <title>Login</title>
 
-<body>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f6f8;
+      }
 
-<h1>Login</h1>
+      .container {
+        width: 400px;
+        margin: 80px auto;
+        padding: 30px;
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+      }
 
-{% if error %}
-<p style="color:red">{{ error }}</p>
-{% endif %}
+      h1 {
+        text-align: center;
+        margin-bottom: 20px;
+      }
 
-<form method="POST">
+      label {
+        font-weight: bold;
+      }
 
-{% csrf_token %}
+      input {
+        width: 100%;
+        padding: 8px;
+        margin-top: 5px;
+      }
 
-<label>Username</label>
-<input type="text" name="username">
+      button {
+        width: 100%;
+        padding: 10px;
+        background-color: #007bff;
+        border: none;
+        color: white;
+        font-size: 16px;
+        border-radius: 5px;
+        cursor: pointer;
+      }
 
-<br><br>
+      button:hover {
+        background-color: #0056b3;
+      }
 
-<label>Password</label>
-<input type="password" name="password">
+      .error {
+        color: red;
+        text-align: center;
+        margin-bottom: 10px;
+      }
 
-<br><br>
+      .register-link {
+        text-align: center;
+        margin-top: 15px;
+      }
 
-<button type="submit">Login</button>
+      .register-link a {
+        color: #007bff;
+        text-decoration: none;
+      }
 
-</form>
+      .register-link a:hover {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
 
-<br>
+  <body>
+    <div class="container">
+      <h1>Login</h1>
 
-<p>Don't have an account? <a href="{% url 'register' %}">Register</a></p>
+      {% if error %}
+      <p class="error">{{ error }}</p>
+      {% endif %}
 
-</body>
+      <form method="POST">
+        {% csrf_token %}
+
+        <label>Username</label>
+        <input type="text" name="username" />
+
+        <br /><br />
+
+        <label>Password</label>
+        <input type="password" name="password" />
+
+        <br /><br />
+
+        <button type="submit">Login</button>
+      </form>
+
+      <div class="register-link">
+        <p>
+          Don't have an account? <a href="{% url 'register' %}">Register</a>
+        </p>
+      </div>
+    </div>
+  </body>
 </html>

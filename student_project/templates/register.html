@@ -1,22 +1,82 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-<head>
-<title>Register</title>
-</head>
+  <head>
+    <title>Register</title>
 
-<body>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f6f8;
+      }
 
-<h1>User Registration</h1>
+      .container {
+        width: 400px;
+        margin: 80px auto;
+        padding: 30px;
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+      }
 
-<form method="POST">
+      h1 {
+        text-align: center;
+        margin-bottom: 20px;
+      }
 
-{% csrf_token %}
+      form p {
+        margin-bottom: 15px;
+      }
 
-{{ form.as_p }}
+      input {
+        width: 100%;
+        padding: 8px;
+        margin-top: 5px;
+      }
 
-<button type="submit">Register</button>
+      button {
+        width: 100%;
+        padding: 10px;
+        background-color: #28a745;
+        border: none;
+        color: white;
+        font-size: 16px;
+        border-radius: 5px;
+        cursor: pointer;
+      }
 
-</form>
+      button:hover {
+        background-color: #1e7e34;
+      }
 
-</body>
+      .login-link {
+        text-align: center;
+        margin-top: 15px;
+      }
+
+      .login-link a {
+        color: #007bff;
+        text-decoration: none;
+      }
+
+      .login-link a:hover {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <h1>User Registration</h1>
+
+      <form method="POST">
+        {% csrf_token %} {{ form.as_p }}
+
+        <button type="submit">Register</button>
+      </form>
+
+      <div class="login-link">
+        <p>Already have an account? <a href="{% url 'login' %}">Login</a></p>
+      </div>
+    </div>
+  </body>
 </html>

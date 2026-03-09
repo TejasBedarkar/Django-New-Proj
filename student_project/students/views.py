@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404        #render HTML templates.
 from .models import Student                  #to query Student table
 from .forms import StudentForm
-
+#django ka inbuild regis form
 from django.contrib.auth.forms import UserCreationForm
 
 from django.contrib.auth import authenticate, login, logout
@@ -60,8 +60,8 @@ def user_login(request):
         password = request.POST.get('password')
         user = authenticate(request, username=username, password=password)
 
-        if user is not None:
-            login(request, user)
+        if user is not None:           #login siccessful
+            login(request, user)       #create session for user
             return redirect('student_list')
         else:
             return render(request, 'login.html', {'error': 'Invalid credentials'})
