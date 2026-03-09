@@ -31,3 +31,8 @@ def edit_student(request, id):
     else:
         form = StudentForm(instance=student)
     return render(request, 'edit_student.html', {'form': form})
+
+def delete_student(request, id):
+    student = Student.objects.get(id=id)
+    student.delete()
+    return redirect('student_list')
