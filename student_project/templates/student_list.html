@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Student List</title>
+<title>Student List</title>
 </head>
 
 <body>
@@ -10,8 +10,6 @@
 
 <a href="/add-student/">Add New Student</a>
 
-<br><br>
-
 <table border="1">
 
 <tr>
@@ -19,6 +17,7 @@
 <th>Email</th>
 <th>Course</th>
 <th>Age</th>
+<th>Action</th>
 </tr>
 
 {% for student in students %}
@@ -28,6 +27,11 @@
 <td>{{ student.email }}</td>
 <td>{{ student.course }}</td>
 <td>{{ student.age }}</td>
+
+<td>
+<a href="/edit-student/{{ student.id }}/">Edit</a>
+</td>
+
 </tr>
 
 {% endfor %}
