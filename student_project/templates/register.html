@@ -1,4 +1,4 @@
-<!doctype html>
+{% comment %} <!doctype html>
 <html>
   <head>
     <title>Register</title>
@@ -78,5 +78,119 @@
         <p>Already have an account? <a href="{% url 'login' %}">Login</a></p>
       </div>
     </div>
+  </body>
+</html> {% endcomment %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!doctype html>
+<html>
+  <head>
+    <title>Register</title>
+    <style>
+      /* Keeping your original styling */
+      body { font-family: Arial, sans-serif; background-color: #f4f6f8; }
+      .container { width: 400px; margin: 80px auto; padding: 30px; background-color: white; border-radius: 8px; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); }
+      h1 { text-align: center; margin-bottom: 20px; }
+      .form-group { margin-bottom: 15px; }
+      label { font-weight: bold; display: block; margin-bottom: 5px; }
+      input { width: 100%; padding: 8px; box-sizing: border-box; }
+      button { width: 100%; padding: 10px; background-color: #28a745; border: none; color: white; font-size: 16px; border-radius: 5px; cursor: pointer; margin-top: 10px; }
+      button:hover { background-color: #1e7e34; }
+      .login-link { text-align: center; margin-top: 15px; }
+      .login-link a { color: #007bff; text-decoration: none; }
+      .login-link a:hover { text-decoration: underline; }
+      .error { color: red; font-size: 14px; margin-bottom: 10px; text-align: center; }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <h1>User Registration</h1>
+      <div id="error-msg" class="error"></div>
+
+      <div class="form-group">
+        <label>Username</label>
+        <input type="text" id="username" />
+      </div>
+
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" id="password" />
+      </div>
+
+      <div class="form-group">
+        <label>Confirm Password</label>
+        <input type="password" id="confirm_password" />
+      </div>
+
+      <button type="button" onclick="handleRegister()">Register</button>
+
+      <div class="login-link">
+        <p>Already have an account? <a href="{% url 'login' %}">Login</a></p>
+      </div>
+    </div>
+
+    <script>
+      async function handleRegister() {
+        const user = document.getElementById('username').value;
+        const pass = document.getElementById('password').value;
+        const confirmPass = document.getElementById('confirm_password').value;
+        const errorElement = document.getElementById('error-msg');
+
+        // Clear previous errors
+        errorElement.innerText = "";
+
+        // Frontend Validation: Check if passwords match
+        if (pass !== confirmPass) {
+          errorElement.innerText = "Passwords do not match!";
+          return;
+        }
+
+        // Prepare data matching the backend register view requirement
+        const registrationData = {
+          username: user,
+          password: pass,
+          confirm_password: confirmPass
+        };
+
+        try {
+          // Uses the API link passed from your .env via views.py
+          const response = await fetch("{{ api_url }}", {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(registrationData)
+          });
+
+          const data = await response.json();
+
+          if (response.ok) {
+            alert("Registration successful! Please login.");
+            window.location.href = "{% url 'login' %}";
+          } else {
+            // Display specific error messages from the backend (e.g., "Username already taken")
+            errorElement.innerText = data.error || JSON.stringify(data);
+          }
+        } catch (error) {
+          console.error("Registration failed:", error);
+          errorElement.innerText = "Could not connect to the server.";
+        }
+      }
+    </script>
   </body>
 </html>

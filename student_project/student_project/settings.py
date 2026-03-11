@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     
     # Register App
     'students',
+    
+    
 ]
 
 MIDDLEWARE = [

@@ -1,4 +1,4 @@
-<!doctype html>
+{% comment %} <!doctype html>
 <html>
   <head>
     <title>Login</title>
@@ -100,5 +100,92 @@
         </p>
       </div>
     </div>
+  </body>
+</html> {% endcomment %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!doctype html>
+<html>
+  <head>
+    <title>Login</title>
+    <style>
+      /* Keeping your original styling */
+      body { font-family: Arial, sans-serif; background-color: #f4f6f8; }
+      .container { width: 400px; margin: 80px auto; padding: 30px; background-color: white; border-radius: 8px; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); }
+      h1 { text-align: center; margin-bottom: 20px; }
+      label { font-weight: bold; }
+      input { width: 100%; padding: 8px; margin-top: 5px; box-sizing: border-box; }
+      button { width: 100%; padding: 10px; background-color: #007bff; border: none; color: white; font-size: 16px; border-radius: 5px; cursor: pointer; margin-top: 20px; }
+      button:hover { background-color: #0056b3; }
+      .error { color: red; text-align: center; margin-bottom: 10px; }
+      .register-link { text-align: center; margin-top: 15px; }
+      .register-link a { color: #007bff; text-decoration: none; }
+      .register-link a:hover { text-decoration: underline; }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Login</h1>
+      <p id="error-msg" class="error"></p>
+
+      <div>
+        <label>Username</label>
+        <input type="text" id="username" />
+        <br /><br />
+        <label>Password</label>
+        <input type="password" id="password" />
+        <br /><br />
+        <button type="button" onclick="handleLogin()">Login</button>
+      </div>
+
+      <div class="register-link">
+        <p>Don't have an account? <a href="{% url 'register' %}">Register</a></p>
+      </div>
+    </div>
+
+    <script>
+      async function handleLogin() {
+        const user = document.getElementById('username').value;
+        const pass = document.getElementById('password').value;
+        const errorElement = document.getElementById('error-msg');
+
+        try {
+          // Accesses the API link passed from your .env via views.py
+          const response = await fetch("{{ api_url }}", {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username: user, password: pass })
+          });
+
+          const data = await response.json();
+
+          if (data.token) {
+            // Store the token for subsequent API calls
+            localStorage.setItem('userToken', data.token);
+            // Redirect to the student list on success
+            window.location.href = "{% url 'student_list' %}";
+          } else {
+            errorElement.innerText = data.error || "Invalid Credentials";
+          }
+        } catch (error) {
+          console.error("Login request failed:", error);
+          errorElement.innerText = "Could not connect to the server.";
+        }
+      }
+    </script>
   </body>
 </html>
